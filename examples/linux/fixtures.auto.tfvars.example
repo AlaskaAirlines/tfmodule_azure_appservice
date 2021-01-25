@@ -1,0 +1,11 @@
+resource-group-name   = "tfmodulevalidation-test-group"
+appName               = "linuxWebAppSample"
+environment           = "test"
+location              = "westus2"
+shortName = "blah"
+emailName = "TestEmail"
+emailAddress = "test@alaskaair.com"
+kind                  = "Linux"
+autoScaleNotifyEmails = ["test@alaskaair.com"]
+appType = "site"
+runtime = "NODE|12.9"
