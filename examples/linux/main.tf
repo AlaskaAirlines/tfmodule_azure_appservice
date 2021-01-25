@@ -1,4 +1,6 @@
-provider "null" {}
+provider "azurerm" {
+  features {}
+}
 
 module "actionGroup" {
   source = "github.com/AlaskaAirlines/tfmodule-azure-actiongroup.git?ref=v1.0.2"
@@ -40,7 +42,7 @@ module "linuxWebApp" {
   appName             = var.appName
   environment         = var.environment
   location            = var.location
-  appServicePlanId    = module.linuxPlan.sharedplanids
+  appServicePlanId    = module.linuxPlan.sharedplanids[0]
   appType             = var.appType
   instrumentationKey  = module.appInsights.instrumentation_key
   linux_fx_version    = var.runtime

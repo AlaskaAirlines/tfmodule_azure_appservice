@@ -31,7 +31,8 @@ variable "kind" {
 }
 
 variable "autoScaleNotifyEmails" {
-  type = list(string)
+  type    = list(string)
+  default = ["test@alaskaair.com"]
 }
 
 variable "appType" {

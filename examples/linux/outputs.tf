@@ -1,3 +1,4 @@
-output "output_name" {
-  value = "output_value"
+output "appserviceid" {
+  value       = module.linuxWebApp.appserviceid
+  description = "The App Service Id"
 }
