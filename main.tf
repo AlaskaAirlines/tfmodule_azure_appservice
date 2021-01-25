@@ -1,6 +1,6 @@
 locals {
   baseName                      = "${var.appName}-${var.environment}-${var.appType}"
-  appsettingsInstrumentationKey = { "APPINSIGHTS_INSTRUMENTATIONKEY" = "${var.instrumentationKey}" }
+  appsettingsInstrumentationKey = { "APPINSIGHTS_INSTRUMENTATIONKEY" = var.instrumentationKey }
 }
 
 
@@ -17,13 +17,17 @@ resource "azurerm_app_service" "appservice" {
 
 
   dynamic "site_config" {
-    for_each         = var.linux_fx_version != "" ? ["site_config"] : []
-    linux_fx_version = var.linux_fx_version
+    for_each = var.linux_fx_version != "" ? ["site_config"] : []
+    content {
+      linux_fx_version = var.linux_fx_version
+    }
   }
 
   dynamic "site_config" {
-    for_each         = var.windows_fx_version != "" ? ["site_config"] : []
-    linux_fx_version = var.windows_fx_version
+    for_each = var.windows_fx_version != "" ? ["site_config"] : []
+    content {
+      windows_fx_version = var.windows_fx_version
+    }
   }
 
   # Enables the use of Key Vault Secrets
@@ -31,14 +35,16 @@ resource "azurerm_app_service" "appservice" {
     type = "SystemAssigned"
   }
 
-  app_settings = merge(locals.appsettingsInstrumentationKey, var.appSettings)
+  app_settings = merge(local.appsettingsInstrumentationKey, var.appSettings)
 
   dynamic "auth_settings" {
-    for_each            = var.ssoCLientId != "" ? ["auth_settings"] : []
-    enabled             = true
-    token_store_enabled = false
-    active_directory {
-      client_id = var.ssoClientId
+    for_each = var.ssoClientId != "" ? ["auth_settings"] : []
+    content {
+      enabled             = true
+      token_store_enabled = false
+      active_directory {
+        client_id = var.ssoClientId
+      }
     }
   }
 }

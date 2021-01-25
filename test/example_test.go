@@ -13,16 +13,15 @@ func TestTerraformExample(t *testing.T) {
 		TerraformDir: "../examples/linux/.",
 		Vars: map[string]interface{}{
 			"resource-group-name": "tfmodulevalidation-test-group",
-			"appName": "linuxWebAppSample",
-			"environment": "test",
-			"location": "westus2",
-			"shortName": "blah",
-			"emailName": "TestEmail",
-			"emailAddress": "test@alaskaair.com",
-			"kind": "Linux",
-			"autoScaleNotifyEmails": ["test@alaskaair.com"],
-			"appType": "site",
-			"runtime": "NODE|12.9",
+			"appName":             "linuxWebAppSample",
+			"environment":         "test",
+			"location":            "westus2",
+			"shortName":           "blah",
+			"emailName":           "TestEmail",
+			"emailAddress":        "test@alaskaair.com",
+			"kind":                "Linux",
+			"appType":             "site",
+			"runtime":             "NODE|12.9",
 		},
 	}
 	defer terraform.Destroy(t, terraformOptions)
@@ -35,5 +34,5 @@ func TestTerraformExample(t *testing.T) {
 
 	outputValue := terraform.Output(t, terraformOptions, "appserviceid")
 	assert.NotNil(outputValue)
-	assert.contains("linuxWebAppSample", outputValue)
+	assert.Contains(outputValue, "linuxWebAppSample")
 }
